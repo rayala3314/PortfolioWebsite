@@ -23,6 +23,8 @@ jobs:
   # Invalidate files on cloudfront
   cdf-invalidation:
       runs-on: ubuntu-latest
+      needs:
+        - deploy-to-s3
       steps:
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@v2

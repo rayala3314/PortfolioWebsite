@@ -4,7 +4,8 @@ on:
   push:
     branches:
     - main
-
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 jobs:
   deploy-to-s3:
     runs-on: ubuntu-latest
@@ -19,7 +20,12 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'us-west-1'   # optional: this defaults to us-east-1 if not provided 
         SOURCE_DIR: 'WebFiles'      # optional: defaults to entire repository
-
+    
+    - uses: skolobov/gh-action-slack@v1
+      with: 
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+      if: always()
   # Invalidate files on cloudfront
   cdf-invalidation:
       runs-on: ubuntu-latest
@@ -34,3 +40,9 @@ jobs:
           AWS_REGION: "us-west-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - uses: skolobov/gh-action-slack@v1
+        with: 
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: always()

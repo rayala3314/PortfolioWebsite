@@ -22,6 +22,7 @@ jobs:
         unset-current-credentials: true
         output-credentials: true
         role-duration-seconds: 900
+    
     - uses: actions/checkout@master
     - uses: jakejarvis/s3-sync-action@master
       with:
@@ -32,6 +33,7 @@ jobs:
         # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ACCESS_KEY_ID: ${{ steps.aws-credentials.outputs.aws-access-key-id }}
         AWS_SECRET_ACCESS_KEY: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
+        aws-session-token: ${{ steps.aws-credentials.outputs.aws-session-token }}
         AWS_REGION: 'us-west-1'   # optional: this defaults to us-east-1 if not provided 
         SOURCE_DIR: 'WebFiles'      # optional: defaults to entire repository
     - uses: skolobov/gh-action-slack@v1

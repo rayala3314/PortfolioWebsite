@@ -19,7 +19,9 @@ jobs:
         aws-region: us-west-1
         role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
         role-session-name: DeployWebsite
+        unset-current-credentials: true
         output-credentials: true
+        role-duration-seconds: 900
     - uses: actions/checkout@master
     - uses: jakejarvis/s3-sync-action@master
       with:

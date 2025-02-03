@@ -3,7 +3,7 @@ name: Upload Website
 on:
   push:
     branches:
-    - main
+    - update-wf-step
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 permissions:
@@ -42,6 +42,8 @@ jobs:
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@v2
         env:
+          AWS_REGION: us-west-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
           PATHS: "/*"
 

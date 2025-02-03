@@ -6,6 +6,8 @@ on:
     - main
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+permissions:
+  id-token: write
 jobs:
   deploy-to-s3:
     name: Deploy to S3

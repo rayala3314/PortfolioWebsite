@@ -39,6 +39,15 @@ jobs:
       needs:
         - deploy-to-s3
       steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-west-1
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: InvalidateCloudFront
+          unset-current-credentials: true
+          output-credentials: true
+
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@v2
         env:

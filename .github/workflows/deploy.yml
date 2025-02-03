@@ -3,7 +3,7 @@ name: Upload Website
 on:
   push:
     branches:
-    - update-wf-step
+    - main
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 permissions:
